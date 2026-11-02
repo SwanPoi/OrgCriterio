@@ -1,0 +1,16 @@
+type: object
+description: Стандартный формат ошибки API
+required:
+  - code
+  - message
+properties:
+  code:
+    type: string
+    example: "VALIDATION_ERROR"
+  message:
+    type: string
+    example: "Неверный формат идентификатора или отсутствуют обязательные поля"
+  details:
+    type: object
+    nullable: true
+    description: Дополнительная информация или список полей с ошибками

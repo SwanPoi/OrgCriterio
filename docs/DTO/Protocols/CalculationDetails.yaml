@@ -1,0 +1,43 @@
+type: object
+required: 
+  - formulaExpression
+  - comments
+  - judgesScores
+properties:
+  formulaExpression:
+    type: string
+  comments:
+    type: array
+    items:
+      type: object
+      properties:
+        judgeName:
+          type: string
+        text:
+          type: string
+  judgesScores:
+    type: array
+    items:
+      type: object
+      properties:
+        judgeId:
+          type: string
+          format: uuid
+        judgeName:
+          type: string
+        criteriaScores:
+          type: array
+          items:
+            type: object
+            properties:
+              criterionId:
+                type: string
+                format: uuid
+              criterionName:
+                type: string
+              rawInputValue:
+                type: string
+              mappedNumericValue:
+                type: number
+        judgeSubtotal:
+          type: number

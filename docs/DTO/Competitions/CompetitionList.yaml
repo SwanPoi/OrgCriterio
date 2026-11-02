@@ -1,0 +1,13 @@
+type: object
+description: Список соревнований с пагинацией
+required:
+  - count
+  - items
+properties:
+  count:
+    type: integer
+    example: 42
+  items:
+    type: array
+    items:
+      $ref: './CompetitionShort.yaml'

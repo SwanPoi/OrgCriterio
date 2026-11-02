@@ -1,0 +1,28 @@
+type: object
+required: 
+  - performanceId
+  - performanceName
+  - participants
+  - place
+  - finalScore
+properties:
+  performanceId:
+    type: string
+    format: uuid
+  performanceName:
+    type: string
+  performanceGroup:
+    type: string
+    nullable: true
+  participants:
+    type: array
+    items:
+      $ref: '../Performances/Participant.yaml'
+  place:
+    type: integer
+  finalScore:
+    type: number
+    format: float
+  calculationDetails:
+    $ref: './CalculationDetails.yaml'
+    nullable: true

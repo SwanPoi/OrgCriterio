@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: API Протоколов
+  version: 1.0.0
+paths:
+  /protocols:
+    get:
+      summary: Получение итогового протокола
+      tags: [Protocols]
+      parameters:
+        - name: competitionId
+          in: query
+          required: true
+          schema: { type: string, format: uuid }
+        - name: categoryId
+          in: query
+          schema: { type: string, format: uuid }
+        - name: search
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Протокол с результатами
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Protocol'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Протокол приватен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /protocols/settings:
+    put:
+      summary: Настройка видимости протокола
+      tags: [Protocols]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProtocolSettingsUpdate'
+      responses:
+        '204':
+          description: Обновлено
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Нет прав на данный протокол
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /protocols/export:
+    get:
+      summary: Экспорт протокола
+      tags: [Protocols]
+      parameters:
+        - name: competitionId
+          in: query
+          required: true
+          schema: { type: string, format: uuid }
+        - name: format
+          in: query
+          required: true
+          schema: { type: string, enum: [pdf, excel, csv] }
+        - name: includeDetails
+          in: query
+          schema: { type: boolean, default: false }
+      responses:
+        '200':
+          description: Файл протокола
+          content:
+            application/pdf:
+              schema: { type: string, format: binary }
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema: { type: string, format: binary }
+            text/csv:
+              schema: { type: string, format: binary }
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Protocol:
+      $ref: '../DTO/Protocols/Protocol.yaml'
+    ProtocolSettingsUpdate:
+      $ref: '../DTO/Protocols/ProtocolSettingsUpdate.yaml'
+    ErrorResponse:
+      $ref: '../DTO/Errors/ErrorResponse.yaml'

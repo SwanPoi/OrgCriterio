@@ -1,0 +1,8 @@
+type: object
+required: [criterionId, value]
+properties:
+  criterionId:
+    type: string
+    format: uuid
+  value:
+    type: number

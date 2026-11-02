@@ -1,0 +1,14 @@
+type: object
+description: Запрос изменения порядка номеров
+required:
+  - categoryId
+  - performanceIds
+properties:
+  categoryId:
+    type: string
+    format: uuid
+  performanceIds:
+    type: array
+    items:
+      type: string
+      format: uuid

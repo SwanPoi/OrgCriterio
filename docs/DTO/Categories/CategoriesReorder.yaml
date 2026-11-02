@@ -1,0 +1,14 @@
+type: object
+description: Запрос пакетного изменения порядка категорий
+required:
+  - competitionId
+  - categoryIds
+properties:
+  competitionId:
+    type: string
+    format: uuid
+  categoryIds:
+    type: array
+    items:
+      type: string
+      format: uuid

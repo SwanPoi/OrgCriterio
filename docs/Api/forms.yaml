@@ -1,0 +1,205 @@
+openapi: 3.0.3
+info:
+  title: API Систем Оценивания
+  version: 1.0.0
+paths:
+  /forms:
+    get:
+      summary: Список систем оценивания
+      tags: [Forms]
+      parameters:
+        - name: genre
+          in: query
+          schema: { type: string }
+        - name: scope
+          in: query
+          schema: { type: string, enum: [mine, public] }
+        - name: search
+          in: query
+          schema: { type: string }
+        - name: skip
+          in: query
+          schema: { type: integer, default: 0 }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormList'
+        '400':
+          description: Некорректный формат параметров
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      summary: Создание системы оценивания
+      tags: [Forms]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormUpsert'
+      responses:
+        '201':
+          description: Создано
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '400':
+          description: Ошибка синтаксиса формулы или разбалловки
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /forms/{id}:
+    get:
+      summary: Детали системы оценивания
+      tags: [Forms]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Доступ к чужой приватной форме запрещен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      summary: Редактирование системы оценивания
+      tags: [Forms]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormUpsert'
+      responses:
+        '200':
+          description: Обновлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Нельзя редактировать чужие формы
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /forms/test-formula:
+    post:
+      summary: Тестовый расчет формулы
+      tags: [Forms]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormulaTestRequest'
+      responses:
+        '200':
+          description: Результат валидации и вычисления
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormulaTestResponse'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Form:
+      $ref: '../DTO/Forms/Form.yaml'
+    FormList:
+      $ref: '../DTO/Forms/FormList.yaml'
+    FormUpsert:
+      $ref: '../DTO/Forms/FormUpsert.yaml'
+    FormulaTestRequest:
+      $ref: '../DTO/Forms/FormulaTestRequest.yaml'
+    FormulaTestResponse:
+      $ref: '../DTO/Forms/FormulaTestResponse.yaml'
+    ErrorResponse:
+      $ref: '../DTO/Errors/ErrorResponse.yaml'
