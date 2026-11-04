@@ -1,0 +1,4 @@
+type: string
+description: Тип категории (определяет состав участников)
+enum: [solo, duet, team]
+nullable: true

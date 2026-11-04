@@ -1,0 +1,24 @@
+type: object
+description: Критерий в рамках формы оценивания
+required:
+  - id
+  - name
+  - uiType
+  - type
+  - values
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  uiType:
+    $ref: './FormFieldUIType.yaml'
+  type:
+    $ref: './FormCriterioValueType.yaml'
+  values:
+    oneOf:
+      - $ref: './FormCriterioNumericValue.yaml'
+      - type: array
+        items:
+          $ref: './FormCriterioCategorialValue.yaml'

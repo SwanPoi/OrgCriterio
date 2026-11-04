@@ -1,0 +1,23 @@
+type: object
+description: Участник номера
+required:
+  - id
+  - name
+  - surname
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  surname:
+    type: string
+  fathername:
+    type: string
+    nullable: true
+  city:
+    type: string
+    nullable: true
+  group:
+    type: string
+    nullable: true

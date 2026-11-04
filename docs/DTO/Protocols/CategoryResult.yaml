@@ -1,0 +1,21 @@
+type: object
+required: 
+  - categoryId
+  - categoryName
+  - resultRule
+  - isClosed
+  - results
+properties:
+  categoryId:
+    type: string
+    format: uuid
+  categoryName:
+    type: string
+  resultRule:
+    $ref: '../Categories/ResultRuleType.yaml'
+  isClosed:
+    type: boolean
+  results:
+    type: array
+    items:
+      $ref: './PerformanceResult.yaml'

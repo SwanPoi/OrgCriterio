@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  title: API Фестивалей
+  version: 1.0.0
+servers:
+  - url: /api/v1
+
+tags:
+  - name: Competitions
+    description: Управление соревнованиями
+
+paths:
+  /competitions:
+    get:
+      summary: Список фестивалей
+      tags: [Competitions]
+      parameters:
+        - name: startDate
+          in: query
+          schema: { type: string, format: date-time, example: 2026-06-01T10:00:00Z }
+        - name: endDate
+          in: query
+          schema: { type: string, format: date-time, example: 2026-10-01T10:00:00Z }
+        - name: skip
+          in: query
+          schema: { type: integer, default: 0 }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20 }
+        - name: multiFieldQuery
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionList'
+        '400':
+          description: Некорректный формат параметров
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      summary: Создание фестиваля
+      tags: [Competitions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionUpsert'
+      responses:
+        '201':
+          description: Фестиваль создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+        '400':
+          description: Ошибка валидации
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /competitions/{id}:
+    get:
+      summary: Информация о фестивале
+      tags: [Competitions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Данные фестиваля
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+        '404':
+          description: Фестиваль не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      summary: Редактирование фестиваля
+      tags: [Competitions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompetitionUpsert'
+      responses:
+        '200':
+          description: Обновлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Competition'
+        '400':
+          description: Фестиваль уже начался
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Нет прав организатора
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Competition:
+      $ref: '../DTO/Competitions/Competition.yaml'
+    CompetitionList:
+      $ref: '../DTO/Competitions/CompetitionList.yaml'
+    CompetitionUpsert:
+      $ref: '../DTO/Competitions/CompetitionUpsert.yaml'
+    ErrorResponse:
+      $ref: '../DTO/Errors/ErrorResponse.yaml'

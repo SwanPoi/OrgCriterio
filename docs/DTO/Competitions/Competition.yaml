@@ -1,0 +1,33 @@
+type: object
+description: Полная модель соревнований / фестиваля
+required:
+  - id
+  - name
+  - startDateTime
+  - endDateTime
+  - address
+  - organizer
+  - categories
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  startDateTime:
+    type: string
+    format: date-time
+  endDateTime:
+    type: string
+    format: date-time
+  address:
+    type: string
+  description:
+    type: string
+    nullable: true
+  organizer:
+    $ref: './OrganizerShort.yaml'
+  categories:
+    type: array
+    items:
+      $ref: '../Categories/Category.yaml'

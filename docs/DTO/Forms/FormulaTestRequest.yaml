@@ -1,0 +1,13 @@
+type: object
+required: [formula, criterios, testValues]
+properties:
+  formula:
+    $ref: './FormulaNode.yaml'
+  criterios:
+    type: array
+    items:
+      $ref: './FormCriterio.yaml'
+  testValues:
+    type: object
+    additionalProperties:
+      type: number

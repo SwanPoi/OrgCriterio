@@ -1,0 +1,21 @@
+type: object
+description: Тело запроса создания/обновления фестиваля
+required:
+  - name
+  - startDateTime
+  - endDateTime
+  - address
+properties:
+  name:
+    type: string
+  startDateTime:
+    type: string
+    format: date-time
+  endDateTime:
+    type: string
+    format: date-time
+  address:
+    type: string
+  description:
+    type: string
+    nullable: true

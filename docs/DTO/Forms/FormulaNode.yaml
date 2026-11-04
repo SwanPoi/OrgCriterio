@@ -1,0 +1,19 @@
+type: object
+required: [type]
+properties:
+  type:
+    type: string
+    enum: [OPERATION, CRITERION, CONSTANT]
+  operator:
+    $ref: './FormulaOperatorType.yaml'
+  operands:
+    type: array
+    items:
+      $ref: './FormulaNode.yaml'
+  criterioId:
+    type: string
+    format: uuid
+  weight:
+    type: number
+  value:
+    type: number
