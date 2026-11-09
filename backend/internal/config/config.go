@@ -11,6 +11,7 @@ type Config struct {
 	Env				string		`yaml:"env" env:"ENV" env-default:"local"`
 	HTTPServer		HTTPServer	`yaml:"http_server"`
 	Log				LogConfig	`yaml:"log"`
+	Database   		Database   	`yaml:"database"`
 }
 
 type HTTPServer struct {
@@ -19,6 +20,10 @@ type HTTPServer struct {
 
 type LogConfig struct {
 	Level string `yaml:"level" env:"LOG_LEVEL" env-default:"debug"` // debug, info, warn, error
+}
+
+type Database struct {
+	DSN string `yaml:"dsn" env:"DATABASE_DSN" env-default:"postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"`
 }
 
 func Must() *Config {
