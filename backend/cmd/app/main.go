@@ -16,7 +16,13 @@ func main() {
 	log := logger.Setup(cfg.Env, cfg.Log.Level)
 	log.Info("starting application", "env", cfg.Env, "log_level", cfg.Log.Level)
 
-	store := storage.New()
+	store, err := storage.New(cfg.Database.DSN)
+
+	if err != nil {
+		log.Error("failed to init storage", "error", err.Error())
+		os.Exit(1)
+	}
+
 	uc := usecase.New(store)
 	srv := handler.NewServer(log, uc)
 
