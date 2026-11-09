@@ -1,0 +1,23 @@
+type: object
+description: Данные для создания/обновления выступления
+required:
+  - categoryId
+  - name
+  - participants
+properties:
+  categoryId:
+    type: string
+    format: uuid
+  name:
+    type: string
+  group:
+    type: string
+    nullable: true
+  participants:
+    type: array
+    items:
+      $ref: './ParticipantUpsert.yaml'
+  targetIndex:
+    type: integer
+    minimum: 0
+    nullable: true

@@ -1,0 +1,28 @@
+type: object
+description: Система оценивания (шаблон формы)
+required:
+  - id
+  - name
+  - isPublic
+  - criterios
+  - formula
+  - hasComment
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  genre:
+    type: string
+    nullable: true
+  isPublic:
+    type: boolean
+  criterios:
+    type: array
+    items:
+      $ref: './FormCriterio.yaml'
+  formula:
+    $ref: './FormulaNode.yaml'
+  hasComment:
+    type: boolean

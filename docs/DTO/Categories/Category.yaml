@@ -1,0 +1,29 @@
+type: object
+description: Модель категории соревнований
+required:
+  - id
+  - name
+  - formId
+  - resultRule
+  - order
+  - performances
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  type:
+    $ref: './CategoryType.yaml'
+  formId:
+    type: string
+    format: uuid
+  resultRule:
+    $ref: './ResultRuleType.yaml'
+  order:
+    type: integer
+    minimum: 0
+  performances:
+    type: array
+    items:
+      $ref: '../Performances/Performance.yaml'

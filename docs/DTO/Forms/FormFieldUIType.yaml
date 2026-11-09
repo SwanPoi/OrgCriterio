@@ -1,0 +1,2 @@
+type: string
+enum: [radio, select, select-button, input-number]

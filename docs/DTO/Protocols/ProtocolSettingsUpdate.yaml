@@ -1,0 +1,14 @@
+type: object
+required: 
+  - competitionId
+  - isPublic
+  - accessLevel
+properties:
+  competitionId:
+    type: string
+    format: uuid
+  isPublic:
+    type: boolean
+  accessLevel:
+    type: string
+    enum: [full, summary_only]

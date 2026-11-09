@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: API Участия и Профиля
+  version: 1.0.0
+paths:
+  /attendances:
+    post:
+      summary: Отметка участия в фестивале
+      tags: [Profile]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceCreate'
+      responses:
+        '201':
+          description: Отметка создана
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Удаление отметки участия
+      tags: [Profile]
+      parameters:
+        - name: competitionId
+          in: query
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '204':
+          description: Удалено
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/competitions:
+    get:
+      summary: Список посещенных фестивалей в профиле
+      tags: [Profile]
+      parameters:
+        - name: startDate
+          in: query
+          schema: { type: string, format: date-time }
+        - name: search
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompetitionList'
+        '401':
+          description: Не авторизован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    AttendanceCreate:
+      type: object
+      required:
+        - competitionId
+      properties:
+        competitionId:
+          type: string
+          format: uuid
+    ErrorResponse:
+      $ref: '../DTO/Errors/ErrorResponse.yaml'
+    CompetitionList:
+      $ref: '../DTO/Competitions/CompetitionList.yaml'

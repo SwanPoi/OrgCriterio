@@ -1,0 +1,55 @@
+components:
+  schemas:
+    OrganizerShort:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    CompetitionShort:
+      type: object
+      required:
+        - id
+        - name
+        - startDateTime
+        - endDateTime
+        - address
+        - organizer
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        startDateTime:
+          type: string
+          format: date-time
+        endDateTime:
+          type: string
+          format: date-time
+        address:
+          type: string
+        description:
+          type: string
+          nullable: true
+        organizer:
+          $ref: '#/OrganizerShort'
+
+    CompetitionList:
+      type: object
+      required:
+        - count
+        - items
+      properties:
+        count:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/CompetitionShort'

@@ -1,0 +1,25 @@
+type: object
+description: Данные для создания/обновления категории
+required:
+  - competitionId
+  - name
+  - formId
+  - resultRule
+properties:
+  competitionId:
+    type: string
+    format: uuid
+  name:
+    type: string
+  type:
+    $ref: './CategoryType.yaml'
+  formId:
+    type: string
+    format: uuid
+  resultRule:
+    $ref: './ResultRuleType.yaml'
+  targetIndex:
+    type: integer
+    minimum: 0
+    nullable: true
+    description: Индекс для вставки в середину списка. Если не указан — в конец.

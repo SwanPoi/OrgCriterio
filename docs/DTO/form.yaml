@@ -1,0 +1,95 @@
+components:
+  schemas:
+    FormCriterioValueType:
+      type: string
+      enum: [numeric, categorial]
+
+    FormFieldUIType:
+      type: string
+      enum: [radio, select, select-button, input-number]
+
+    FormCriterioNumericValue:
+      type: object
+      required: [min, max, step]
+      properties:
+        min:
+          type: integer
+        max:
+          type: integer
+        step:
+          type: integer
+
+    FormCriterioCategorialValue:
+      type: object
+      required: [id, label, value]
+      properties:
+        id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        value:
+          type: integer
+
+    FormCriterio:
+      type: object
+      required: [id, name, uiType, type, values]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        uiType:
+          $ref: '#/FormFieldUIType'
+        type:
+          $ref: '#/FormCriterioValueType'
+        values:
+          oneOf:
+            - $ref: '#/FormCriterioNumericValue'
+            - type: array
+              items:
+                $ref: '#/FormCriterioCategorialValue'
+
+    FormulaOperatorType:
+      type: string
+      enum: ['+', '-', '/', '*', max, min, avg]
+
+    FormulaNode:
+      type: object
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [OPERATION, CRITERION, CONSTANT]
+        operator:
+          $ref: '#/FormulaOperatorType'
+        operands:
+          type: array
+          items:
+            $ref: '#/FormulaNode'
+        criterioId:
+          type: string
+          format: uuid
+        weight:
+          type: number
+        value:
+          type: number
+
+    Form:
+      type: object
+      required: [id, name, criterios, formula, hasComment]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        criterios:
+          type: array
+          items:
+            $ref: '#/FormCriterio'
+        formula:
+          $ref: '#/FormulaNode'
+        hasComment:
+          type: boolean

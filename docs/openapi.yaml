@@ -1,0 +1,85 @@
+openapi: 3.0.3
+info:
+  title: API Системы Оценивания Фестивалей и Конкурсов
+  version: 1.0.0
+  description: Главная спецификация REST API для управления фестивалями, категориями, формами оценивания, судейством и протоколами.
+servers:
+  - url: /api/v1
+
+paths:
+  # Фестивали
+  /competitions:
+    $ref: './Api/competitions.yaml#/paths/~1competitions'
+  /competitions/{id}:
+    $ref: './Api/competitions.yaml#/paths/~1competitions~1{id}'
+
+  # Категории
+  /categories:
+    $ref: './Api/categories.yaml#/paths/~1categories'
+  /categories/{id}:
+    $ref: './Api/categories.yaml#/paths/~1categories~1{id}'
+  /categories/order:
+    $ref: './Api/categories.yaml#/paths/~1categories~1order'
+  /categories/{id}/form-status:
+    $ref: './Api/categories.yaml#/paths/~1categories~1{id}~1form-status'
+  /categories/{id}/judges:
+    $ref: './Api/categories.yaml#/paths/~1categories~1{id}~1judges'
+  /categories/{categoryId}/judges/{judgeId}:
+    $ref: './Api/categories.yaml#/paths/~1categories~1{categoryId}~1judges~1{judgeId}'
+
+  # Выступления
+  /performances:
+    $ref: './Api/performances.yaml#/paths/~1performances'
+  /performances/{id}:
+    $ref: './Api/performances.yaml#/paths/~1performances~1{id}'
+  /performances/order:
+    $ref: './Api/performances.yaml#/paths/~1performances~1order'
+
+  # Системы оценивания
+  /forms:
+    $ref: './Api/forms.yaml#/paths/~1forms'
+  /forms/{id}:
+    $ref: './Api/forms.yaml#/paths/~1forms~1{id}'
+  /forms/test-formula:
+    $ref: './Api/forms.yaml#/paths/~1forms~1test-formula'
+
+  # Судейство
+  /evaluations:
+    $ref: './Api/evaluations.yaml#/paths/~1evaluations'
+  /judges/assignments:
+    $ref: './Api/evaluations.yaml#/paths/~1judges~1assignments'
+
+  # Протоколы
+  /protocols:
+    $ref: './Api/protocols.yaml#/paths/~1protocols'
+  /protocols/settings:
+    $ref: './Api/protocols.yaml#/paths/~1protocols~1settings'
+  /protocols/export:
+    $ref: './Api/protocols.yaml#/paths/~1protocols~1export'
+
+  # Профиль и Участие
+  /attendances:
+    $ref: './Api/attendances.yaml#/paths/~1attendances'
+  /users/me/festivals:
+    $ref: './Api/attendances.yaml#/paths/~1users~1competitions'
+
+components:
+  schemas:
+    ErrorResponse:
+      $ref: './DTO/Errors/ErrorResponse.yaml'
+    Competition:
+      $ref: './DTO/Competitions/Competition.yaml'
+    CompetitionShort:
+      $ref: './DTO/Competitions/CompetitionShort.yaml'
+    CompetitionList:
+      $ref: './DTO/Competitions/CompetitionList.yaml'
+    Category:
+      $ref: './DTO/Categories/Category.yaml'
+    Performance:
+      $ref: './DTO/Performances/Performance.yaml'
+    Form:
+      $ref: './DTO/Forms/Form.yaml'
+    FormList:
+      $ref: './DTO/Forms/FormList.yaml'
+    Protocol:
+      $ref: './DTO/Protocols/Protocol.yaml'

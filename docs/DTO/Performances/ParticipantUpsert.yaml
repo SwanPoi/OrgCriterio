@@ -1,0 +1,19 @@
+type: object
+description: Данные для создания участника
+required:
+  - name
+  - surname
+properties:
+  name:
+    type: string
+  surname:
+    type: string
+  fathername:
+    type: string
+    nullable: true
+  city:
+    type: string
+    nullable: true
+  group:
+    type: string
+    nullable: true

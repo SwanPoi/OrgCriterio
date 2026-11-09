@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: API Оценок Судей
+  version: 1.0.0
+paths:
+  /evaluations:
+    put:
+      summary: Сохранение / Автосохранение оценок судьей
+      tags: [Judges]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JudgeEvaluation'
+      responses:
+        '200':
+          description: Оценки сохранены
+        '400':
+          description: Форма закрыта организатором, редактирование заблокировано
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Судья не назначен в эту категорию
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /judges/assignments:
+    get:
+      summary: Список назначенных судье категорий
+      tags: [Judges]
+      responses:
+        '200':
+          description: Успех
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '401':
+          description: Требуется авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    JudgeEvaluation:
+      $ref: '../DTO/Evaluations/JudgeEvaluation.yaml'
+    Category:
+      $ref: '../DTO/Categories/Category.yaml'
+    ErrorResponse:
+      $ref: '../DTO/Errors/ErrorResponse.yaml'

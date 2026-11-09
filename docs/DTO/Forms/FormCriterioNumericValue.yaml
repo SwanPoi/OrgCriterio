@@ -1,0 +1,9 @@
+type: object
+required: [min, max, step]
+properties:
+  min:
+    type: integer
+  max:
+    type: integer
+  step:
+    type: integer

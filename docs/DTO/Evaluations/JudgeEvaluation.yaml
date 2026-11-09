@@ -1,0 +1,13 @@
+type: object
+required: [performanceId, criteriaScores]
+properties:
+  performanceId:
+    type: string
+    format: uuid
+  criteriaScores:
+    type: array
+    items:
+      $ref: './CriterioScore.yaml'
+  comment:
+    type: string
+    nullable: true

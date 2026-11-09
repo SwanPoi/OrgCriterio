@@ -1,0 +1,23 @@
+type: object
+description: Выступление / номер в категории
+required:
+  - id
+  - name
+  - order
+  - participants
+properties:
+  id:
+    type: string
+    format: uuid
+  name:
+    type: string
+  group:
+    type: string
+    nullable: true
+  order:
+    type: integer
+    minimum: 0
+  participants:
+    type: array
+    items:
+      $ref: './Participant.yaml'
