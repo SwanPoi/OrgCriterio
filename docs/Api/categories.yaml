@@ -218,13 +218,6 @@ paths:
       responses:
         '204':
           description: Статус формы изменен (при закрытии произведен расчёт)
-        '400':
-          # TODO: странная валидация, надо подумать
-          description: Ошибка расчёта (например, деление на ноль)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '401':
           description: Требуется авторизация
           content:
